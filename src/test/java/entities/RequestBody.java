@@ -1,22 +1,26 @@
 package entities;
 
+import lombok.Data;
+
+import java.util.List;
+
+@Data
 public class RequestBody {
     private String email;
     private String password;
+    private String company_name;
+    private String seller_name;
+    private String phone_number;
+    private String address;
 
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    private String category_title;
+    private String category_description;
+    private boolean flag;
 
-    public String getPassword() {
-        return password;
-    }
+    private List<Integer> sellersIdsForArchive;
+    private boolean archive;
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+
+
 }

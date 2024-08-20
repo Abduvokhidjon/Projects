@@ -1,5 +1,6 @@
 package api;
 
+import com.github.javafaker.Faker;
 import entities.RequestBody;
 import io.cucumber.java.it.Ma;
 import io.restassured.http.ContentType;
@@ -8,6 +9,7 @@ import org.junit.Test;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import utilities.ApiRunner;
 import utilities.CashwiseToken;
 import utilities.Config;
 
@@ -82,6 +84,36 @@ public class TestAPI {
                 .params(params).get(url);
 
         response.prettyPrint();
+
+    }
+
+    @Test
+    public void createSeller() {
+        Faker faker = new Faker();
+        String url = Config.getProperty("cashWiseBaseURL") + "/api/myaccount/sellers/";
+        String token = CashwiseToken.getToken();
+        RequestBody requestBody = new RequestBody();
+        requestBody.setCompany_name(faker.company().name());
+        requestBody.setSeller_name(faker.name().firstName());
+        requestBody.setEmail(faker.internet().emailAddress());
+        requestBody.setPhone_number(faker.phoneNumber().phoneNumber());
+        requestBody.setAddress(faker.address().streetAddress());
+
+
+        Response response = RestAssured.given().auth().oauth2(token).contentType(ContentType.JSON)
+                .body(requestBody).post(url);
+        response.prettyPrint();
+       Assert.assertEquals(201, response.statusCode());
+
+       Response response1 = RestAssured.given().auth().oauth2(token).get(url + response.jsonPath().getString("seller_id"));
+       Assert.assertEquals(200, response1.statusCode());
+
+    }
+
+    @Test
+    public void testGet() {
+        ApiRunner.runGET("/api/myaccount/sellers/4610");
+        ApiRunner.getCustomResponse().getEmail();
 
     }
 }
