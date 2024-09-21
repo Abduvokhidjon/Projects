@@ -110,10 +110,5 @@ public class TestAPI {
 
     }
 
-    @Test
-    public void testGet() {
-        ApiRunner.runGET("/api/myaccount/sellers/4610");
-        ApiRunner.getCustomResponse().getEmail();
 
-    }
 }

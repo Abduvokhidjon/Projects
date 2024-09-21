@@ -14,9 +14,10 @@ public class CustomResponse {
     private String category_title;
     private int seller_id;
     private String email;
+    private String seller_name;
 
 
 //    private List<CustomResponse> responses;
-    private CustomResponse[] responsesArray;
-    private List<CustomResponse> responsesList;
+
+    private List<CustomResponse> responses;
 }

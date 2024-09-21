@@ -134,13 +134,13 @@ public class PojoTest {
         String urlToArchive = Config.getProperty("cashWiseBaseURL") + "/api/myaccount/sellers/archive/unarchive";
 
         CustomResponse responses = mapper.readValue(response.asString(), CustomResponse.class);
-        System.out.println(responses.getResponsesList().size());
+        System.out.println(responses.getResponses().size());
         Map<String, Object > paramToArchive = new HashMap<>();
-        for(int i = 0; i < responses.getResponsesList().size(); i++) {
-            String email = responses.getResponsesList().get(i).getEmail();
+        for(int i = 0; i < responses.getResponses().size(); i++) {
+            String email = responses.getResponses().get(i).getEmail();
            if(email != null) {
                if (email.contains("@yahoo.com")) {
-                   paramToArchive.put("sellersIdsForArchive", responses.getResponsesList().get(i).getSeller_id());
+                   paramToArchive.put("sellersIdsForArchive", responses.getResponses().get(i).getSeller_id());
                    paramToArchive.put("archive", true);
                    Response response1 = RestAssured.given().auth().oauth2(token).params(paramToArchive).post(urlToArchive);
                    Assert.assertEquals(200, response1.statusCode());
@@ -164,7 +164,7 @@ public class PojoTest {
 
         Response response = RestAssured.given().auth().oauth2(token).contentType(ContentType.JSON)
                 .body(requestBody).post(url);
-        response.prettyPrint();
+//        response.prettyPrint();
 
 
         String url2 = Config.getProperty("cashWiseBaseURL") + "/api/myaccount/sellers/all";
@@ -175,16 +175,9 @@ public class PojoTest {
     ObjectMapper mapper = new ObjectMapper();
 
     CustomResponse []customResponse = mapper.readValue(response1.asString(), CustomResponse[].class);
-int sum = 0;
-for(int i = 0 ; i < customResponse.length; i++) {
-    System.out.println(customResponse[i]);
-    sum += i;
-}
-
-        System.out.println(sum  );
 
 
-
+        System.out.println(customResponse[0].getSeller_name());
 
 
     }

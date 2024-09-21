@@ -10,8 +10,9 @@ import org.junit.runner.RunWith;
         plugin = {"html:target/cucumberReport.html", "json:target/testReport.json"},
         features = "src/test/resources/features",
         glue = "step_definitions",
-        tags = "@login",
+        tags = "@Regression",
         dryRun = false
+
 
 )
 
